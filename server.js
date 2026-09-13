@@ -22,12 +22,30 @@ function generateAdminToken(username, password) {
   return crypto.createHash('sha256').update(`al-seeni-admin-auth-${username}-${password}`).digest('hex');
 }
 
+app.disable('x-powered-by');
+
+// Security Headers Middleware
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// Helper to get admin credentials with environment variable priority
+function getAdminCredentials() {
+  const settings = db.getSettings();
+  const username = (process.env.ADMIN_USERNAME || settings.adminUsername || 'admin').trim();
+  const password = (process.env.ADMIN_PASSWORD || settings.adminPassword || 'admin2026').trim();
+  const pin = (process.env.ADMIN_PIN || settings.adminPin || '2026').trim();
+  return { username, password, pin };
+}
+
 // Authentication validator
 function isAdminAuthenticated(req) {
-  const settings = db.getSettings();
-  const currentUsername = settings.adminUsername || 'admin';
-  const currentPassword = settings.adminPassword || 'admin2026';
-  const expectedToken = generateAdminToken(currentUsername, currentPassword);
+  const { username, password, pin } = getAdminCredentials();
+  const expectedToken = generateAdminToken(username, password);
   
   const cookieToken = getCookie(req, 'admin_token');
   const authHeader = req.headers['authorization'];
@@ -35,16 +53,45 @@ function isAdminAuthenticated(req) {
   const queryToken = req.query ? req.query.auth_token : null;
 
   // Legacy pin token support for backwards compatibility
-  const legacyPin = settings.adminPin || '2026';
-  const legacyToken = crypto.createHash('sha256').update(`al-seeni-admin-salt-${legacyPin}`).digest('hex');
+  const legacyToken = crypto.createHash('sha256').update(`al-seeni-admin-salt-${pin}`).digest('hex');
 
   return cookieToken === expectedToken || headerToken === expectedToken || queryToken === expectedToken ||
          cookieToken === legacyToken || headerToken === legacyToken || queryToken === legacyToken;
 }
 
+// Login rate limiter (in-memory, 10 attempts per 15 minutes)
+const loginAttempts = new Map();
+function rateLimitLogin(req, res, next) {
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  const now = Date.now();
+  const record = loginAttempts.get(ip) || { count: 0, firstAttempt: now };
+
+  if (now - record.firstAttempt > 15 * 60 * 1000) {
+    record.count = 0;
+    record.firstAttempt = now;
+  }
+
+  if (record.count >= 10) {
+    return res.status(429).json({ error: 'تم تجاوز الحد الأقصى لمحاولات الدخول. يرجى الانتظار لمدة 15 دقيقة.' });
+  }
+
+  record.count++;
+  loginAttempts.set(ip, record);
+  next();
+}
+
 // Body Parsers for JSON & Form Data
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+
+// Middleware to protect ALL /api/admin/* endpoints (except /api/admin/login)
+app.use('/api/admin', (req, res, next) => {
+  if (req.path === '/login') return next();
+  if (!isAdminAuthenticated(req)) {
+    return res.status(401).json({ success: false, error: 'غير مصرح: يجب تسجيل الدخول كمسؤول للوصول إلى هذه الخدمة' });
+  }
+  next();
+});
 
 // Static Assets with Cache Control
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -202,13 +249,10 @@ app.get('/admin', (req, res) => {
 });
 
 // Admin Authentication Endpoints
-app.post('/api/admin/login', (req, res) => {
+app.post('/api/admin/login', rateLimitLogin, (req, res) => {
   try {
     const { username, password, pin, remember } = req.body;
-    const settings = db.getSettings();
-    const currentUsername = (settings.adminUsername || 'admin').trim();
-    const currentPassword = (settings.adminPassword || 'admin2026').trim();
-    const currentPin = (settings.adminPin || '2026').trim();
+    const { username: currentUsername, password: currentPassword, pin: currentPin } = getAdminCredentials();
 
     let authenticated = false;
 
@@ -223,6 +267,10 @@ app.post('/api/admin/login', (req, res) => {
     }
 
     if (authenticated) {
+      // Reset rate limiter on successful login
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+      loginAttempts.delete(ip);
+
       const token = generateAdminToken(currentUsername, currentPassword);
       const maxAge = remember ? 30 * 24 * 3600 : 7 * 24 * 3600;
       res.setHeader('Set-Cookie', `admin_token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}`);

@@ -429,6 +429,20 @@ async function runHttpTests() {
       json.products.forEach(p => assert.strictEqual(p.makeId, testMake));
     });
 
+    await itAsync('SECURITY: /api/admin/products/:id without auth returns 401 Unauthorized', async () => {
+      const res = await get('/api/admin/products/test-id');
+      assert.strictEqual(res.status, 401);
+      const json = JSON.parse(res.body);
+      assert.strictEqual(json.success, false);
+    });
+
+    await itAsync('SECURITY: Security headers are correctly attached to HTTP responses', async () => {
+      const res = await get('/');
+      assert.strictEqual(res.headers['x-content-type-options'], 'nosniff');
+      assert.strictEqual(res.headers['x-frame-options'], 'SAMEORIGIN');
+      assert.strictEqual(res.headers['x-powered-by'], undefined);
+    });
+
   } finally {
     server.close();
   }
