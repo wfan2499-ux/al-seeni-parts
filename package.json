@@ -1,0 +1,32 @@
+{
+  "name": "saudi-chinese-parts-catalog",
+  "version": "1.0.0",
+  "description": "متجر وكتالوج قطع غيار السيارات الصينية المتخصص في المملكة العربية السعودية",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/catalog.test.js"
+  },
+  "keywords": [
+    "قطع غيار",
+    "سيارات صينية",
+    "شانجان",
+    "جيلي",
+    "هافال",
+    "شيري",
+    "ام جي",
+    "السعودية",
+    "changan",
+    "geely",
+    "haval",
+    "chery",
+    "mg",
+    "spare-parts",
+    "saudi-arabia"
+  ],
+  "author": "Saudi Auto Parts",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

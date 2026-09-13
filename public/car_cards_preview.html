@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>الصيني AL-SEENI | الماركات المعتمدة وقطع غيار السيارات الصينية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #080c14;
+      --bg-secondary: #0d131f;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-hover: rgba(22, 33, 58, 0.95);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(245, 158, 11, 0.5);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-gold: #f59e0b;
+      --accent-gold-light: #fbbf24;
+      --accent-gold-glow: rgba(245, 158, 11, 0.25);
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --font-family: 'Tajawal', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 12%, rgba(245, 158, 11, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 85% 55%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 95%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Top Announcement Bar */
+    .announcement-bar {
+      background: linear-gradient(90deg, #111827, #0d1525, #111827);
+      border-bottom: 1px solid var(--border-color);
+      padding: 9px 16px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+    }
+
+    .announcement-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .announcement-item span.highlight {
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    /* Header */
+    header {
+      background: rgba(8, 12, 20, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-container img {
+      height: 46px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+    }
+
+    nav.desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav.desktop-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    nav.desktop-nav a:hover,
+    nav.desktop-nav a.active {
+      color: var(--text-main);
+    }
+
+    nav.desktop-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent-gold);
+      border-radius: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-vin-header {
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
+      color: #050505;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-vin-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section / Value Proposition */
+    .hero-section {
+      padding: 44px 0 35px;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: var(--radius-full);
+      color: var(--accent-gold-light);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .badge-pill .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title span.highlight-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    /* Why Us / Value Proposition Pillars */
+    .value-pillars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px 18px;
+      text-align: right;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+    }
+
+    .pillar-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.6);
+      background: var(--bg-card-hover);
+    }
+
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .pillar-icon.gold { background: rgba(245, 158, 11, 0.12); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.25); }
+    .pillar-icon.cyan { background: rgba(6, 182, 212, 0.12); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.25); }
+    .pillar-icon.emerald { background: rgba(16, 185, 129, 0.12); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.25); }
+    .pillar-icon.purple { background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
+
+    .pillar-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .pillar-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Section Brands */
+    .brands-section {
+      padding: 15px 0 50px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 26px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-header-left {
+      text-align: right;
+    }
+
+    .section-tag {
+      color: var(--accent-gold);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .total-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .total-badge strong {
+      color: var(--accent-gold);
+    }
+
+    /* 4 Cards Grid */
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .car-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+      backdrop-filter: blur(14px);
+    }
+
+    .car-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px rgba(245, 158, 11, 0.15);
+      background: var(--bg-card-hover);
+    }
+
+    /* Specific Brand Subtle Glows */
+    .car-card.jetour-card:hover { border-color: rgba(245, 158, 11, 0.6); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.7), 0 0 24px rgba(245, 158, 11, 0.2); }
+    .car-card.haval-card:hover { border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.7), 0 0 24px rgba(56, 189, 248, 0.2); }
+    .car-card.jac-card:hover { border-color: rgba(16, 185, 129, 0.6); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.7), 0 0 24px rgba(16, 185, 129, 0.2); }
+    .car-card.faw-card:hover { border-color: rgba(192, 132, 252, 0.6); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.7), 0 0 24px rgba(192, 132, 252, 0.2); }
+
+    /* Card Media / Car Image Container */
+    .car-card-media {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      background: #0b111e;
+    }
+
+    .car-card-media img.car-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .car-card:hover .car-card-media img.car-image {
+      transform: scale(1.06);
+    }
+
+    /* Overlay gradient for seamless car transition */
+    .car-card-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8, 12, 20, 0.1) 0%,
+        transparent 35%,
+        rgba(15, 23, 42, 0.85) 80%,
+        rgba(15, 23, 42, 1) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Top Brand Logo Overlay Badge */
+    .brand-logo-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      background: rgba(10, 15, 26, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-logo-badge img {
+      height: 22px;
+      max-width: 80px;
+      object-fit: contain;
+      filter: brightness(1.2) contrast(1.1);
+    }
+
+    /* Availability Indicator */
+    .availability-tag {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      backdrop-filter: blur(4px);
+    }
+
+    .availability-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #10b981;
+    }
+
+    /* Card Content */
+    .car-card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 12px;
+    }
+
+    .brand-names {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .brand-title-ar {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-title-en {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-tagline {
+      font-size: 0.84rem;
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    /* Model tags pills */
+    .model-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 2px 0;
+    }
+
+    .model-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .car-card:hover .model-pill {
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+
+    .model-pill.hero-model {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.28);
+      color: var(--accent-gold-light);
+    }
+
+    /* Specs info */
+    .card-specs {
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .spec-item strong {
+      color: var(--text-main);
+    }
+
+    /* Action Button */
+    .btn-browse {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      margin-top: 4px;
+    }
+
+    .btn-browse .arrow {
+      transition: transform 0.2s ease;
+      font-size: 1.1rem;
+    }
+
+    .car-card:hover .btn-browse {
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
+      color: #050505;
+      border-color: transparent;
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
+    }
+
+    .car-card:hover .btn-browse .arrow {
+      transform: translateX(-4px);
+    }
+
+    /* VIN Search Assistant Bar */
+    .vin-assistant-banner {
+      background: linear-gradient(135deg, rgba(13, 21, 37, 0.95), rgba(26, 38, 66, 0.9));
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      margin: 30px 0 45px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .vin-assistant-banner::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      right: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .vin-banner-content {
+      flex: 1;
+      text-align: right;
+    }
+
+    .vin-banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-gold);
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .vin-banner-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .vin-banner-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .vin-input-group {
+      display: flex;
+      align-items: center;
+      background: rgba(8, 12, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-full);
+      padding: 5px 6px 5px 16px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transition: var(--transition);
+    }
+
+    .vin-input-group:focus-within {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 18px var(--accent-gold-glow);
+    }
+
+    .vin-input-group input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      padding: 8px;
+      text-transform: uppercase;
+      min-width: 0;
+    }
+
+    .vin-input-group input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .btn-vin-submit {
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
+      color: #050505;
+      font-weight: 800;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-vin-submit:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Trust & Stats Bar */
+    .trust-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 30px 0 50px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .stat-box {
+      padding: 10px;
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: #05080e;
+      border-top: 1px solid var(--border-color);
+      padding: 36px 0 24px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    .footer-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-brand img {
+      height: 36px;
+      opacity: 0.85;
+    }
+
+    .footer-rights {
+      color: var(--text-dim);
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1100px) {
+      .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+      .value-pillars {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .vin-assistant-banner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .vin-input-group {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .announcement-bar {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+        gap: 8px;
+      }
+      .announcement-item:nth-child(2),
+      .announcement-item:nth-child(3) {
+        display: none; /* Keep announcement super clean on mobile */
+      }
+      nav.desktop-nav {
+        display: none;
+      }
+      .header-container {
+        padding: 10px 16px;
+      }
+      .logo-container img {
+        height: 38px;
+      }
+      .btn-vin-header {
+        font-size: 0.78rem;
+        padding: 6px 14px;
+      }
+      .hero-section {
+        padding: 30px 0 25px;
+      }
+      .hero-title {
+        font-size: 1.65rem;
+        line-height: 1.35;
+      }
+      .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+      }
+      .value-pillars {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 35px;
+      }
+      .section-title {
+        font-size: 1.5rem;
+      }
+      .brands-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .car-card-media {
+        height: 210px;
+      }
+      .vin-assistant-banner {
+        padding: 22px 18px;
+        margin: 25px 0 35px;
+      }
+      .vin-banner-title {
+        font-size: 1.25rem;
+      }
+      .vin-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 10px;
+        box-shadow: none;
+      }
+      .vin-input-group input {
+        background: rgba(10, 15, 26, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius-md);
+        padding: 12px 16px;
+        width: 100%;
+      }
+      .btn-vin-submit {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        border-radius: var(--radius-md);
+      }
+      .trust-stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 25px 0 35px;
+      }
+      .stat-number {
+        font-size: 1.8rem;
+      }
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-item">
+      <span>🚀</span>
+      <span>استيراد مباشر من المصانع العالمية بدون وسطاء</span>
+    </div>
+    <div class="announcement-item">
+      <span>🛡️</span>
+      <span>ضمان مطابقة 100% برقم الهيكل (VIN)</span>
+    </div>
+    <div class="announcement-item">
+      <span>⚡</span>
+      <span>شحن سريع لجميع مدن المملكة والخليج خلال <span class="highlight">24 - 48 ساعة</span></span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo-container">
+        <img src="/images/al_seeni_logo_white.png" alt="الصيني AL-SEENI - لقطع غيار السيارات الصينية">
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="#" class="active">الرئيسية</a>
+        <a href="#brands">الماركات المعتمدة</a>
+        <a href="#why-us">لماذا أسعارنا الأفضل؟</a>
+        <a href="#vin-search">تسعير برقم الهيكل</a>
+        <a href="#contact">تواصل معنا</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#vin-search" class="btn-vin-header">
+          <span>تسعير برقم الشاصي</span>
+          <span>⚡</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero / Value Proposition Section -->
+    <section class="hero-section" id="why-us">
+      <div class="badge-pill">
+        <div class="pulse-dot"></div>
+        <span>المستورد الأول المعتمد لقطع غيار السيارات الصينية بالمملكة</span>
+      </div>
+
+      <h1 class="hero-title">
+        قطع غيار سياراتك الصينية <br>
+        <span class="highlight-gold">بأسعار المصنع المباشرة</span> وضمان مطابقة 100%
+      </h1>
+
+      <p class="hero-subtitle">
+        نربطك مباشرة بمصانع قطع الغيار المعتمدة دون سلاسل وسطاء أو موزعين، مع توفير خيارات القطع الأصلية وبدائل الدرجة الأولى المعتمدة بأعلى معايير الأمان وبخصم حقيقي يصل إلى 40%.
+      </p>
+
+      <!-- 4 Core Pillars of Distinction -->
+      <div class="value-pillars">
+        
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-icon gold">🏭</div>
+            <div class="pillar-title">استيراد مباشر من المصنع</div>
+          </div>
+          <p class="pillar-desc">
+            لا نعتمد على وسطاء أو سماسرة؛ نشتري دفعاتنا مباشرة من خطوط إنتاج المصانع لنمنحك أسعار جملة حقيقية لا تنافس.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-icon cyan">🔍</div>
+            <div class="pillar-title">مطابقة الشاصي 100% (VIN)</div>
+          </div>
+          <p class="pillar-desc">
+            منظومة رقمية متطورة تفحص رقم هيكل سيارتك قبل تأكيد الطلب، لتضمن وصول القطعة المطابقة تماماً بنسبة خطأ 0%.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-icon emerald">⭐</div>
+            <div class="pillar-title">أصلي + بدائل معتمدة</div>
+          </div>
+          <p class="pillar-desc">
+            حرية الاختيار بين قطع الوكالة الأصلية أو بدائل OEM الممتازة ذات الاعتماد الدولي، مع ضمان استبدال فوري.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-icon purple">🚚</div>
+            <div class="pillar-title">شحن فوري ومستودعات جاهزة</div>
+          </div>
+          <p class="pillar-desc">
+            تجهيز وشحن فوري لجميع مدن المملكة (الرياض، جدة، الشرقية، الجنوب، والشمال) مع تتبع حي للشحنة خطوة بخطوة.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4 Brands Section -->
+    <section class="brands-section" id="brands">
+      
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="section-tag">كتالوج الماركات المعتمدة</span>
+          <h2 class="section-title">اختر ماركة سيارتك لتصفح الكتالوج المخصص</h2>
+          <p class="section-subtitle">نوفر تغطية شاملة لكافة أجزاء المحرك، ناقل الحركة، البودي، والعضلات</p>
+        </div>
+        <div class="total-badge">
+          <span>الشركات المعتمدة:</span>
+          <strong>4 ماركات رائدة</strong>
+        </div>
+      </div>
+
+      <!-- The 4 Car Cards -->
+      <div class="brands-grid">
+
+        <!-- Card 1: جيتور JETOUR -->
+        <article class="car-card jetour-card" id="card-jetour">
+          <div class="car-card-media">
+            <div class="brand-logo-badge">
+              <img src="/images/brands/jetour_official.svg" alt="شعار جيتور JETOUR">
+            </div>
+            <img src="/images/banners/card_car_jetour.jpg" alt="سيارة جيتور T2 ترافيلر" class="car-image">
+            <div class="availability-tag">
+              <span class="dot"></span>
+              <span>متاح فوري</span>
+            </div>
+          </div>
+
+          <div class="car-card-body">
+            <div class="brand-names">
+              <h3 class="brand-title-ar">جيتور</h3>
+              <span class="brand-title-en">JETOUR AUTO</span>
+            </div>
+            <p class="brand-tagline">القوة والفخامة لسيارات الدفع الرباعي</p>
+
+            <div class="model-pills">
+              <span class="model-pill hero-model">T2 ترافيلر</span>
+              <span class="model-pill">داشينغ (Dashing)</span>
+              <span class="model-pill">X70 Plus</span>
+              <span class="model-pill">X90 Plus</span>
+            </div>
+
+            <div class="card-specs">
+              <div class="spec-item">
+                <span>📦 المتوفر:</span>
+                <strong>+1,450 قطعة</strong>
+              </div>
+              <div class="spec-item">
+                <span>🛡️ الضمان:</span>
+                <strong>حتى 12 شهر</strong>
+              </div>
+            </div>
+
+            <a href="/catalog?brand=jetour" class="btn-browse">
+              <span>تصفح قطع غيار جيتور</span>
+              <span class="arrow">←</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: هافال HAVAL -->
+        <article class="car-card haval-card" id="card-haval">
+          <div class="car-card-media">
+            <div class="brand-logo-badge">
+              <img src="/images/brands/haval_official.svg" alt="شعار هافال HAVAL">
+            </div>
+            <img src="/images/banners/card_car_haval.jpg" alt="سيارة هافال H6 New" class="car-image">
+            <div class="availability-tag">
+              <span class="dot"></span>
+              <span>متاح فوري</span>
+            </div>
+          </div>
+
+          <div class="car-card-body">
+            <div class="brand-names">
+              <h3 class="brand-title-ar">هافال / جريت وول</h3>
+              <span class="brand-title-en">HAVAL / GWM</span>
+            </div>
+            <p class="brand-tagline">الريادة العالمية في الـ SUV والبيك آب</p>
+
+            <div class="model-pills">
+              <span class="model-pill hero-model">H6 الجديد 2024</span>
+              <span class="model-pill">جوليان (Jolion)</span>
+              <span class="model-pill">تانك 300 / 500</span>
+              <span class="model-pill">باور (Poer)</span>
+            </div>
+
+            <div class="card-specs">
+              <div class="spec-item">
+                <span>📦 المتوفر:</span>
+                <strong>+2,100 قطعة</strong>
+              </div>
+              <div class="spec-item">
+                <span>🛡️ الضمان:</span>
+                <strong>حتى 12 شهر</strong>
+              </div>
+            </div>
+
+            <a href="/catalog?brand=haval" class="btn-browse">
+              <span>تصفح قطع غيار هافال</span>
+              <span class="arrow">←</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: جاك JAC -->
+        <article class="car-card jac-card" id="card-jac">
+          <div class="car-card-media">
+            <div class="brand-logo-badge">
+              <img src="/images/brands/jac_official.svg" alt="شعار جاك JAC">
+            </div>
+            <img src="/images/banners/card_car_jac.jpg" alt="سيارة جاك J7 فاست باك" class="car-image">
+            <div class="availability-tag">
+              <span class="dot"></span>
+              <span>متاح فوري</span>
+            </div>
+          </div>
+
+          <div class="car-card-body">
+            <div class="brand-names">
+              <h3 class="brand-title-ar">جاك</h3>
+              <span class="brand-title-en">JAC MOTORS</span>
+            </div>
+            <p class="brand-tagline">الاعتمادية الفائقة والاقتصادية الذكية</p>
+
+            <div class="model-pills">
+              <span class="model-pill hero-model">J7 فاست باك</span>
+              <span class="model-pill">JS4 كروس أوفر</span>
+              <span class="model-pill">JS3</span>
+              <span class="model-pill">T8 Pro بيك آب</span>
+            </div>
+
+            <div class="card-specs">
+              <div class="spec-item">
+                <span>📦 المتوفر:</span>
+                <strong>+1,100 قطعة</strong>
+              </div>
+              <div class="spec-item">
+                <span>🛡️ الضمان:</span>
+                <strong>حتى 12 شهر</strong>
+              </div>
+            </div>
+
+            <a href="/catalog?brand=jac" class="btn-browse">
+              <span>تصفح قطع غيار جاك</span>
+              <span class="arrow">←</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4: فاو / بيستون FAW / BESTUNE -->
+        <article class="car-card faw-card" id="card-faw">
+          <div class="car-card-media">
+            <div class="brand-logo-badge">
+              <img src="/images/brands/faw_official.png" alt="شعار فاو بيستون FAW">
+            </div>
+            <img src="/images/banners/card_car_faw.jpg" alt="سيارة بيستون T77 Pro" class="car-image">
+            <div class="availability-tag">
+              <span class="dot"></span>
+              <span>متاح فوري</span>
+            </div>
+          </div>
+
+          <div class="car-card-body">
+            <div class="brand-names">
+              <h3 class="brand-title-ar">فاو / بيستون</h3>
+              <span class="brand-title-en">FAW / BESTUNE</span>
+            </div>
+            <p class="brand-tagline">الفخامة الصينية والابتكار المتكامل</p>
+
+            <div class="model-pills">
+              <span class="model-pill hero-model">بيستون T77 Pro</span>
+              <span class="model-pill">سيدان B70</span>
+              <span class="model-pill">T99 الفاخرة</span>
+              <span class="model-pill">T33 / X40</span>
+            </div>
+
+            <div class="card-specs">
+              <div class="spec-item">
+                <span>📦 المتوفر:</span>
+                <strong>+950 قطعة</strong>
+              </div>
+              <div class="spec-item">
+                <span>🛡️ الضمان:</span>
+                <strong>حتى 12 شهر</strong>
+              </div>
+            </div>
+
+            <a href="/catalog?brand=faw" class="btn-browse">
+              <span>تصفح قطع غيار فاو</span>
+              <span class="arrow">←</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- VIN Assistance Quick Box -->
+    <section class="vin-assistant-banner" id="vin-search">
+      <div class="vin-banner-content">
+        <div class="vin-banner-badge">
+          <span>⚡</span>
+          <span>خدمة الفحص والمطابقة الفورية</span>
+        </div>
+        <h3 class="vin-banner-title">لم تجد قطعتك أو محتار في رقم الموديل؟</h3>
+        <p class="vin-banner-desc">
+          أدخل رقم الهيكل (الشاصي - 17 خانة) وسيقوم مهندسونا بفتح مخطط الوكالة الخاص بسيارتك واستخراج أرقام القطع الأصلية وأسعارها بدقة 100% مجاناً.
+        </p>
+      </div>
+
+      <div class="vin-input-group">
+        <input type="text" placeholder="أدخل رقم الهيكل (VIN) المكون من 17 خانة..." maxlength="17">
+        <button class="btn-vin-submit">
+          <span>طلب تسعيرة دقيقة</span>
+          <span>←</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Trust & Statistics -->
+    <section class="trust-stats-bar">
+      <div class="stat-box">
+        <div class="stat-number">+15,000</div>
+        <div class="stat-label">قطعة مفحوصة ومطابقة في الكتالوج</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">99.8%</div>
+        <div class="stat-label">نسبة دقة المطابقة برقم الشاصي</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">24-48</div>
+        <div class="stat-label">ساعة متوسط التوصيل لكافة مدن المملكة</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">ضمان استرجاع واستبدال ذهبي</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="/images/al_seeni_logo_white.png" alt="الصيني AL-SEENI">
+        <span>الصيني - المتجر والمستورد المتخصص لقطع غيار السيارات الصينية في المملكة العربية السعودية</span>
+      </div>
+      <div class="footer-rights">
+        جميع الحقوق محفوظة © 2026 متجر الصيني AL-SEENI
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+{
+  "makes": [
+    {
+      "id": "jac",
+      "nameAr": "جاك",
+      "nameEn": "JAC",
+      "models": [
+        { "id": "j7", "nameAr": "جي 7 (J7)", "nameEn": "J7" },
+        { "id": "js4", "nameAr": "جي اس 4 (JS4)", "nameEn": "JS4" },
+        { "id": "t8", "nameAr": "تي 8 بيك أب (T8)", "nameEn": "T8" },
+        { "id": "js3", "nameAr": "جي اس 3 (JS3)", "nameEn": "JS3" },
+        { "id": "s3", "nameAr": "اس 3 (S3)", "nameEn": "S3" }
+      ]
+    },
+    {
+      "id": "faw",
+      "nameAr": "فاو",
+      "nameEn": "FAW",
+      "models": [
+        { "id": "t77", "nameAr": "تي 77 (T77)", "nameEn": "T77" },
+        { "id": "x40", "nameAr": "اكس 40 (X40)", "nameEn": "X40" },
+        { "id": "t33", "nameAr": "تي 33 (T33)", "nameEn": "T33" },
+        { "id": "b70", "nameAr": "بي 70 (B70)", "nameEn": "B70" },
+        { "id": "t99", "nameAr": "تي 99 (T99)", "nameEn": "T99" }
+      ]
+    },
+    {
+      "id": "greatwall",
+      "nameAr": "جريت وول",
+      "nameEn": "Great Wall",
+      "models": [
+        { "id": "wingle7", "nameAr": "ونجل 7 (Wingle 7)", "nameEn": "Wingle 7" },
+        { "id": "wingle5", "nameAr": "ونجل 5 (Wingle 5)", "nameEn": "Wingle 5" },
+        { "id": "poer", "nameAr": "باور (Poer)", "nameEn": "Poer" },
+        { "id": "kingkong", "nameAr": "باور كينج كونج (King Kong)", "nameEn": "King Kong" },
+        { "id": "tank300", "nameAr": "تانك 300 (Tank 300)", "nameEn": "Tank 300" },
+        { "id": "tank500", "nameAr": "تانك 500 (Tank 500)", "nameEn": "Tank 500" },
+        { "id": "h6", "nameAr": "هافال اتش 6 (H6)", "nameEn": "H6" },
+        { "id": "jolion", "nameAr": "هافال جوليان (Jolion)", "nameEn": "Jolion" },
+        { "id": "h9", "nameAr": "هافال اتش 9 (H9)", "nameEn": "H9" },
+        { "id": "dargo", "nameAr": "هافال دارجو (Dargo)", "nameEn": "Dargo" }
+      ]
+    },
+    {
+      "id": "jetour",
+      "nameAr": "جيتور",
+      "nameEn": "Jetour",
+      "models": [
+        { "id": "dashing", "nameAr": "داشينج (Dashing)", "nameEn": "Dashing" },
+        { "id": "x70", "nameAr": "اكس 70 (X70)", "nameEn": "X70" },
+        { "id": "x70plus", "nameAr": "اكس 70 بلس (X70 Plus)", "nameEn": "X70 Plus" },
+        { "id": "t2", "nameAr": "تي 2 (T2)", "nameEn": "T2" },
+        { "id": "x90plus", "nameAr": "اكس 90 بلس (X90 Plus)", "nameEn": "X90 Plus" }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "brakes",
+      "nameAr": "الفرامل والمكابح"
+    },
+    {
+      "id": "suspension",
+      "nameAr": "المساعدات والتعليق"
+    },
+    {
+      "id": "filters",
+      "nameAr": "الفلاتر"
+    },
+    {
+      "id": "engine",
+      "nameAr": "قطع المحرك"
+    },
+    {
+      "id": "electrical",
+      "nameAr": "الكهربائيات"
+    },
+    {
+      "id": "cooling",
+      "nameAr": "التبريد والتدفئة"
+    },
+    {
+      "id": "steering",
+      "nameAr": "التوجيه والدركسيون"
+    },
+    {
+      "id": "sensors",
+      "nameAr": "الحساسات والمجسات"
+    },
+    {
+      "id": "ac",
+      "nameAr": "التكييف"
+    },
+    {
+      "id": "belts",
+      "nameAr": "السيور والأحزمة"
+    },
+    {
+      "id": "lights",
+      "nameAr": "الإضاءة والمصابيح"
+    },
+    {
+      "id": "fuel",
+      "nameAr": "نظام الوقود"
+    },
+    {
+      "id": "bearings",
+      "nameAr": "المحامل والبيارينق"
+    },
+    {
+      "id": "transmission",
+      "nameAr": "ناقل الحركة"
+    },
+    {
+      "id": "exhaust",
+      "nameAr": "العادم"
+    },
+    {
+      "id": "body",
+      "nameAr": "الهيكل الخارجي"
+    }
+  ]
+}
