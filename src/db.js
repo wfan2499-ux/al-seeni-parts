@@ -63,15 +63,17 @@ function loadFromFiles() {
 // الإعداد الأولي
 // ======================================================
 function loadData() {
+  // نقرأ الملفات المحلية أولاً دائماً لضمان ألا يكون الـ Cache فارغاً أبداً عند الـ Cold Start
+  loadFromFiles();
+
   if (!useFirestore()) {
-    loadFromFiles();
     // مراقبة الملفات عند التطوير المحلي بدون Firebase
     try {
       fs.watchFile(PRODUCTS_FILE, { interval: 1500 }, loadFromFiles);
       fs.watchFile(SETTINGS_FILE, { interval: 2000 }, loadFromFiles);
     } catch (_) {}
   } else {
-    // تحميل أولي من Firestore بشكل متزامن (best-effort)
+    // تحديث أولي من Firestore بشكل متزامن
     _refreshAllFromFirestore().catch(console.error);
   }
 }
@@ -87,14 +89,15 @@ async function _refreshAllFromFirestore() {
       firestore.collection('settings').doc('categories').get(),
     ]);
 
-    if (settingsSnap.exists) settingsCache = settingsSnap.data();
-    if (!categoriesSnap.exists) {
-      // إذا ما وُجد categories في Firestore، نقرأ من الملف المحلي
-      try { categoriesCache = JSON.parse(fs.readFileSync(CATEGORIES_FILE, 'utf8')); } catch (_) {}
-    } else {
+    if (settingsSnap.exists) {
+      settingsCache = { ...settingsCache, ...settingsSnap.data() };
+    }
+    if (categoriesSnap.exists) {
       categoriesCache = categoriesSnap.data();
     }
-    productsCache = productsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (productsSnap.docs && productsSnap.docs.length > 0) {
+      productsCache = productsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
 
     const now = Date.now();
     settingsCacheAt = now;
@@ -125,16 +128,31 @@ function saveSettings(newSettings) {
   settingsCache = { ...settingsCache, ...newSettings };
   settingsCacheAt = Date.now();
 
+  let writePromise;
   if (useFirestore()) {
-    // كتابة في الخلفية
-    getDb().collection('settings').doc('main').set(settingsCache, { merge: true }).catch(console.error);
+    writePromise = getDb().collection('settings').doc('main').set(settingsCache, { merge: true });
   } else {
-    try {
-      fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settingsCache, null, 2), 'utf8');
-    } catch (err) {
-      console.warn('Warning: Could not persist settings.json:', err.message);
-    }
+    writePromise = new Promise((resolve) => {
+      try {
+        fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settingsCache, null, 2), 'utf8');
+      } catch (err) {
+        console.warn('Warning: Could not persist settings.json:', err.message);
+      }
+      resolve(settingsCache);
+    });
   }
+
+  const result = { ...settingsCache };
+  Object.defineProperty(result, 'then', {
+    value: function(onFulfilled, onRejected) {
+      return writePromise.then(() => onFulfilled(result), onRejected);
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
+
+  return result;
 }
 
 // ======================================================
@@ -223,12 +241,15 @@ function filterProducts({
 // ======================================================
 // Products - Writes
 // ======================================================
-async function _saveProductsToFile() {
-  try {
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(productsCache, null, 2), 'utf8');
-  } catch (err) {
-    console.warn('Warning: Could not persist products.json:', err.message);
-  }
+function _saveProductsToFile() {
+  return new Promise((resolve) => {
+    try {
+      fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(productsCache, null, 2), 'utf8');
+    } catch (err) {
+      console.warn('Warning: Could not persist products.json:', err.message);
+    }
+    resolve();
+  });
 }
 
 function _buildProductDoc(productData) {
@@ -273,12 +294,21 @@ function addProduct(productData) {
   productsCache.unshift(newProduct);
   productsCacheAt = Date.now();
 
-  // كتابة في الخلفية - لا تنتظر
+  let writePromise;
   if (useFirestore()) {
-    getDb().collection('products').doc(id).set(newProduct).catch(console.error);
+    writePromise = getDb().collection('products').doc(id).set(newProduct);
   } else {
-    _saveProductsToFile().catch(console.error);
+    writePromise = _saveProductsToFile();
   }
+
+  Object.defineProperty(newProduct, 'then', {
+    value: function(onFulfilled, onRejected) {
+      return writePromise.then(() => onFulfilled(newProduct), onRejected);
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
 
   return newProduct;
 }
@@ -300,12 +330,21 @@ function updateProduct(id, productData) {
   productsCache[index] = updated;
   productsCacheAt = Date.now();
 
-  // كتابة في الخلفية
+  let writePromise;
   if (useFirestore()) {
-    getDb().collection('products').doc(id).set(updated, { merge: true }).catch(console.error);
+    writePromise = getDb().collection('products').doc(id).set(updated, { merge: true });
   } else {
-    _saveProductsToFile().catch(console.error);
+    writePromise = _saveProductsToFile();
   }
+
+  Object.defineProperty(updated, 'then', {
+    value: function(onFulfilled, onRejected) {
+      return writePromise.then(() => onFulfilled(updated), onRejected);
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
 
   return updated;
 }
@@ -326,14 +365,24 @@ function deleteProduct(id) {
   productsCache = productsCache.filter(p => p.id !== id);
   productsCacheAt = Date.now();
 
-  // كتابة في الخلفية
+  let writePromise;
   if (useFirestore()) {
-    getDb().collection('products').doc(id).delete().catch(console.error);
+    writePromise = getDb().collection('products').doc(id).delete();
   } else {
-    _saveProductsToFile().catch(console.error);
+    writePromise = _saveProductsToFile();
   }
 
-  return true;
+  const wrapper = Object(true);
+  Object.defineProperty(wrapper, 'then', {
+    value: function(onFulfilled, onRejected) {
+      return writePromise.then(() => onFulfilled(true), onRejected);
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
+
+  return wrapper;
 }
 
 function importProducts(importedArray, mode = 'append') {
@@ -372,7 +421,7 @@ function importProducts(importedArray, mode = 'append') {
 
   productsCacheAt = Date.now();
 
-  // كتابة في الخلفية
+  let writePromise;
   if (useFirestore()) {
     const firestore = getDb();
     const batch = firestore.batch();
@@ -382,12 +431,22 @@ function importProducts(importedArray, mode = 'append') {
       batchCount++;
       if (batchCount >= 490) break;
     }
-    batch.commit().catch(console.error);
+    writePromise = batch.commit();
   } else {
-    _saveProductsToFile().catch(console.error);
+    writePromise = _saveProductsToFile();
   }
 
-  return { importedCount: validProducts.length, added, updated, total: productsCache.length, totalNow: productsCache.length, errors };
+  const result = { importedCount: validProducts.length, added, updated, total: productsCache.length, totalNow: productsCache.length, errors };
+  Object.defineProperty(result, 'then', {
+    value: function(onFulfilled, onRejected) {
+      return writePromise.then(() => onFulfilled(result), onRejected);
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
+
+  return result;
 }
 
 // ======================================================

@@ -311,17 +311,23 @@ app.post('/api/admin/upload-image', (req, res) => {
       return res.status(400).json({ error: 'حجم الصورة يتجاوز الحد الأقصى (10 ميجابايت)' });
     }
 
-    const uploadDir = path.join(__dirname, 'public', 'images', 'products', 'uploads');
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    try {
+      const uploadDir = path.join(__dirname, 'public', 'images', 'products', 'uploads');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
+      const safeFilename = `up_${Date.now()}_${Math.floor(Math.random() * 10000)}.${ext}`;
+      const targetPath = path.join(uploadDir, safeFilename);
+      fs.writeFileSync(targetPath, buffer);
+
+      const imageUrl = `/images/products/uploads/${safeFilename}`;
+      res.json({ success: true, imageUrl });
+    } catch (fsErr) {
+      // Vercel serverless has a read-only filesystem; fallback to using data URL directly
+      console.warn('Filesystem read-only (Vercel), using data URL for image:', fsErr.message);
+      res.json({ success: true, imageUrl: imageBase64 });
     }
-
-    const safeFilename = `up_${Date.now()}_${Math.floor(Math.random() * 10000)}.${ext}`;
-    const targetPath = path.join(uploadDir, safeFilename);
-    fs.writeFileSync(targetPath, buffer);
-
-    const imageUrl = `/images/products/uploads/${safeFilename}`;
-    res.json({ success: true, imageUrl });
   } catch (err) {
     console.error('Error uploading image:', err);
     res.status(500).json({ error: 'فشل حفظ الصورة على السيرفر' });
