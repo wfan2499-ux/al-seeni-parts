@@ -6,14 +6,18 @@
  * 2. Vercel: يقرأ المتغيرات البيئية FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
  */
 
-const admin = require('firebase-admin');
+const { initializeApp, cert, getApps, getApp } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
+const path = require('path');
+const fs = require('fs');
 
 let db = null;
 
 function initFirebase() {
   try {
-    if (admin.apps && admin.apps.length > 0) {
-      db = admin.app().firestore();
+    const apps = getApps();
+    if (apps.length > 0) {
+      db = getFirestore(getApp());
       return db;
     }
   } catch (_) {}
@@ -22,17 +26,19 @@ function initFirebase() {
 
   // الوضع 1: متغيرات البيئة (Vercel / Production)
   if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
-    credential = admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      // Vercel يحول \n إلى \\n في المتغيرات، نعيدها لأسطر حقيقية
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    });
+    try {
+      credential = cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      });
+    } catch (err) {
+      console.error('⚠️ خطأ في قراءة مفتاح Firebase من متغيرات البيئة:', err.message);
+      return null;
+    }
   }
   // الوضع 2: ملف JSON المحلي (للتطوير)
   else {
-    const path = require('path');
-    const fs = require('fs');
     const keyPath = path.join(__dirname, '..', 'serviceAccountKey.json');
 
     if (!fs.existsSync(keyPath)) {
@@ -40,14 +46,24 @@ function initFirebase() {
       return null;
     }
 
-    const serviceAccount = JSON.parse(fs.readFileSync(keyPath, 'utf8'));
-    credential = admin.credential.cert(serviceAccount);
+    try {
+      const serviceAccount = JSON.parse(fs.readFileSync(keyPath, 'utf8'));
+      credential = cert(serviceAccount);
+    } catch (err) {
+      console.error('⚠️ خطأ في قراءة ملف serviceAccountKey.json:', err.message);
+      return null;
+    }
   }
 
-  admin.initializeApp({ credential });
-  db = admin.firestore();
-  console.log('✅ Firebase Firestore connected');
-  return db;
+  try {
+    const app = initializeApp({ credential });
+    db = getFirestore(app);
+    console.log('✅ Firebase Firestore connected successfully');
+    return db;
+  } catch (err) {
+    console.error('⚠️ فشل الاتصال بـ Firebase Firestore:', err.message);
+    return null;
+  }
 }
 
 function getDb() {

@@ -12,7 +12,8 @@
 
 const path = require('path');
 const fs   = require('fs');
-const admin = require('firebase-admin');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
 
 // ==========================================
 // تهيئة Firebase
@@ -26,8 +27,8 @@ if (!fs.existsSync(keyPath)) {
 }
 
 const serviceAccount = JSON.parse(fs.readFileSync(keyPath, 'utf8'));
-admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-const db = admin.firestore();
+const app = initializeApp({ credential: cert(serviceAccount) });
+const db = getFirestore(app);
 
 // ==========================================
 // قراءة البيانات المحلية
@@ -86,13 +87,8 @@ async function seed() {
     console.log(`   ✅ ${totalUploaded}/${products.length} قطعة تم رفعها`);
   }
 
-  console.log('\n🎉 اكتمل الرفع بنجاح!');
-  console.log('   يمكنك الآن إضافة متغيرات Firebase في Vercel ونشر الموقع.\n');
-
-  console.log('📌 متغيرات البيئة المطلوبة في Vercel:');
-  console.log(`   FIREBASE_PROJECT_ID    = ${serviceAccount.project_id}`);
-  console.log(`   FIREBASE_CLIENT_EMAIL  = ${serviceAccount.client_email}`);
-  console.log(`   FIREBASE_PRIVATE_KEY   = (المفتاح الخاص من الملف - يبدأ بـ -----BEGIN PRIVATE KEY-----)\n`);
+  console.log('\n🎉 اكتمل الرفع بنجاح إلى Firebase Firestore!');
+  console.log('   جميع قطع الغيار والإعدادات والتصنيفات أصبحت مخزنة على السحابة.\n');
 
   process.exit(0);
 }
