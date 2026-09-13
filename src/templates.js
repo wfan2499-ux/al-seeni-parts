@@ -20,10 +20,19 @@ const icons = {
   close: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
 };
 
+function cleanSaudiPhone(num) {
+  let clean = (num || '').replace(/[^0-9]/g, '');
+  if (!clean) return '';
+  if (clean.startsWith('00966')) clean = clean.substring(2);
+  else if (clean.startsWith('05')) clean = '966' + clean.substring(1);
+  else if (clean.startsWith('5') && clean.length === 9) clean = '966' + clean;
+  return clean;
+}
+
 // Generate polite, clean WhatsApp inquiry link (Direct, No Emojis, No Exaggerations)
 function buildWhatsAppLink(product, currentUrl = '') {
   const settings = db.getSettings();
-  const rawNumber = (settings.whatsappNumber || '').replace(/[^0-9]/g, '');
+  const rawNumber = cleanSaudiPhone(settings.whatsappNumber);
   if (!rawNumber) {
     return {
       isValid: false,
@@ -106,7 +115,7 @@ function layout({
   <link rel="stylesheet" href="/css/stitch-enterprise.css?v=mono_v3">
   ${pageHeadExtra || ''}
 </head>
-<body class="bg-white text-[#111827] font-sans antialiased">
+<body class="bg-white text-[#111827] font-sans antialiased" data-whatsapp="${cleanSaudiPhone(settings.whatsappNumber || '966581194038')}">
 
   <!-- Clean Top Navigation Bar (High-End Tech Slate Header) -->
   <header id="site-header" class="bg-[#0B132B] text-white border-b border-[#1C2541] sticky top-0 z-40 shadow-sm transition-transform duration-300 ease-in-out" style="will-change: transform;">
@@ -359,6 +368,7 @@ function renderRiyalSymbol(sizeClass = 'w-3.5 h-3.5', extraClass = '') {
 module.exports = {
   icons,
   buildWhatsAppLink,
+  cleanSaudiPhone,
   layout,
   renderPartCard,
   renderRiyalSymbol,

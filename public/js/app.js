@@ -367,8 +367,8 @@
         cart.forEach((item, i) => {
           msg += `${i + 1}. ${item.title} - الكمية: ${item.qty || 1} - السعر: ${item.price} ريال\n`;
         });
-        msg += `\nالمجموع المقدر: ${total.toFixed(2)} ريال\nوشكراً.`;
-        checkoutBtn.href = `https://wa.me/966550000000?text=${encodeURIComponent(msg)}`;
+        const phone = (document.body.dataset.whatsapp || '966581194038').replace(/[^0-9]/g, '');
+        checkoutBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
       }
 
       // Attach remove listeners

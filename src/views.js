@@ -1,6 +1,6 @@
 // Views and Pages Renderers
 const db = require('./db');
-const { icons, layout, renderPartCard, renderRiyalSymbol, buildWhatsAppLink, escapeHtml } = require('./templates');
+const { icons, layout, renderPartCard, renderRiyalSymbol, buildWhatsAppLink, cleanSaudiPhone, escapeHtml } = require('./templates');
 
 // 1. Homepage (Minimalist Monochrome Architecture)
 function renderHomePage() {
@@ -113,7 +113,7 @@ function renderHomePage() {
           const part = document.getElementById('rfq-part').value.trim();
           const car = document.getElementById('rfq-car').value.trim();
           if (!part) return;
-          const phone = "${settings.whatsappNumber || '966550000000'}";
+          const phone = "${cleanSaudiPhone(settings.whatsappNumber || '966581194038')}";
           let msg = "السلام عليكم، أود طلب تسعير وتوفر القطعة التالية:\\n";
           msg += "القطعة / الكود: " + part + "\\n";
           if (car) msg += "السيارة والموديل: " + car + "\\n";
