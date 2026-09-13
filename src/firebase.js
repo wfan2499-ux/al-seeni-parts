@@ -27,10 +27,16 @@ function initFirebase() {
   // الوضع 1: متغيرات البيئة (Vercel / Production)
   if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
     try {
+      let privateKey = (process.env.FIREBASE_PRIVATE_KEY || '').trim();
+      if ((privateKey.startsWith('"') && privateKey.endsWith('"')) || (privateKey.startsWith("'") && privateKey.endsWith("'"))) {
+        privateKey = privateKey.slice(1, -1);
+      }
+      privateKey = privateKey.replace(/\\n/g, '\n');
+
       credential = cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        projectId: process.env.FIREBASE_PROJECT_ID.trim(),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL.trim(),
+        privateKey: privateKey,
       });
     } catch (err) {
       console.error('⚠️ خطأ في قراءة مفتاح Firebase من متغيرات البيئة:', err.message);
