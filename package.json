@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node tests/catalog.test.js"
+    "test": "node tests/catalog.test.js",
+    "seed": "node scripts/seed-firebase.js"
   },
   "keywords": [
     "قطع غيار",
@@ -27,6 +28,7 @@
   "author": "Saudi Auto Parts",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "firebase-admin": "^14.4.0"
   }
 }

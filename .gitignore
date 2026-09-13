@@ -1,8 +1,11 @@
 node_modules/
 scratch/
 .env
+.env.local
 .DS_Store
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# مفتاح Firebase - لا ترفعه أبداً على GitHub!
+serviceAccountKey.json

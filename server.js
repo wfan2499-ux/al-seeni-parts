@@ -347,9 +347,9 @@ app.get('/api/categories', (req, res) => {
 });
 
 // REST API: Add New Product
-app.post('/api/admin/products', (req, res) => {
+app.post('/api/admin/products', async (req, res) => {
   try {
-    const { nameAr, price, makeId, sectionId, modelNameAr } = req.body;
+    const { nameAr, price, makeId, sectionId } = req.body;
     if (!nameAr || price === undefined || !makeId || !sectionId) {
       return res.status(400).json({ error: 'الحقول الإلزامية غير مكتملة (اسم القطعة، السعر، الشركة المصنعة، والقسم)' });
     }
@@ -357,7 +357,7 @@ app.post('/api/admin/products', (req, res) => {
     const makeObj = categories.makes.find(m => m.id === makeId);
     const sectionObj = categories.sections.find(s => s.id === sectionId);
 
-    const newProd = db.addProduct({
+    const newProd = await db.addProduct({
       ...req.body,
       makeNameAr: makeObj ? makeObj.nameAr : makeId,
       sectionNameAr: sectionObj ? sectionObj.nameAr : sectionId
@@ -371,12 +371,12 @@ app.post('/api/admin/products', (req, res) => {
 });
 
 // REST API: Update Existing Product (Price / Stock / Image / Info)
-app.put('/api/admin/products/:id', (req, res) => {
+app.put('/api/admin/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const categories = db.getCategories();
     const updateData = { ...req.body };
-    
+
     if (updateData.makeId) {
       const makeObj = categories.makes.find(m => m.id === updateData.makeId);
       if (makeObj) updateData.makeNameAr = makeObj.nameAr;
@@ -386,7 +386,7 @@ app.put('/api/admin/products/:id', (req, res) => {
       if (sectionObj) updateData.sectionNameAr = sectionObj.nameAr;
     }
 
-    const updated = db.updateProduct(id, updateData);
+    const updated = await db.updateProduct(id, updateData);
     if (!updated) {
       return res.status(404).json({ error: 'القطعة غير موجودة' });
     }
@@ -398,10 +398,10 @@ app.put('/api/admin/products/:id', (req, res) => {
 });
 
 // REST API: Delete Product
-app.delete('/api/admin/products/:id', (req, res) => {
+app.delete('/api/admin/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = db.deleteProduct(id);
+    const deleted = await db.deleteProduct(id);
     if (!deleted) {
       return res.status(404).json({ error: 'القطعة غير موجودة' });
     }
@@ -413,13 +413,13 @@ app.delete('/api/admin/products/:id', (req, res) => {
 });
 
 // REST API: Import Products (CSV / JSON)
-app.post('/api/admin/import', (req, res) => {
+app.post('/api/admin/import', async (req, res) => {
   try {
     const { items, mode } = req.body;
     if (!Array.isArray(items)) {
       return res.status(400).json({ error: 'مصفوفة المنتجات مطلوبة للاستيراد' });
     }
-    const result = db.importProducts(items, mode || 'append');
+    const result = await db.importProducts(items, mode || 'append');
     res.json({ success: true, ...result });
   } catch (err) {
     console.error('Error importing products:', err);
@@ -467,7 +467,7 @@ app.get('/api/admin/settings', (req, res) => {
 });
 
 // REST API: Update Settings (WhatsApp number, Store Name, VAT, etc.)
-app.post('/api/admin/settings', (req, res) => {
+app.post('/api/admin/settings', async (req, res) => {
   try {
     const allowed = ['storeName', 'storeTagline', 'storeDescription', 'whatsappNumber', 'phone', 'email', 'vatNumber', 'vatRate', 'currency', 'whatsappGreeting', 'vinCheckNotice', 'adminPin', 'adminUsername', 'adminPassword'];
     const updatePayload = {};
@@ -477,7 +477,7 @@ app.post('/api/admin/settings', (req, res) => {
       }
     }
 
-    db.saveSettings(updatePayload);
+    await db.saveSettings(updatePayload);
     res.json({ success: true, settings: db.getSettings() });
   } catch (err) {
     console.error('Error saving settings:', err);
