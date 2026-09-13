@@ -169,6 +169,25 @@ app.get('/compatibility-disclaimer', (req, res) => {
   res.send(views.renderLegalPage('disclaimer'));
 });
 
+// Health & Diagnostic Endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    version: '2.0.0',
+    firestore: db.useFirestore(),
+    env: {
+      hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+      projectId: process.env.FIREBASE_PROJECT_ID || null,
+      hasEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+      hasKey: !!process.env.FIREBASE_PRIVATE_KEY,
+      keyLength: (process.env.FIREBASE_PRIVATE_KEY || '').length
+    },
+    settings: {
+      whatsappNumber: db.getSettings().whatsappNumber
+    }
+  });
+});
+
 // -------------------------------------------------------------
 // SEO Endpoints (Sitemap & Robots.txt)
 // -------------------------------------------------------------
